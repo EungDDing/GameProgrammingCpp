@@ -1,6 +1,11 @@
 #pragma once
 #include <SDL.h>
 
+struct Vector2 {
+	float x;
+	float y;
+};
+
 class Game {
 public:
 	Game();
@@ -15,4 +20,10 @@ private:
 	SDL_Window* mWindow;
 	SDL_Renderer* mRenderer;
 	bool mIsRunning;
+	Uint32 mTicksCount;
+
+	int mPaddleDir;
+	Vector2 mPaddlePos;
+	Vector2 mBallPos;
+	Vector2 mBallVel;
 };
