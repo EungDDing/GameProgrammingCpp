@@ -5,10 +5,10 @@ const float paddleH = 100.0f;
 
 Game::Game()
 	:mWindow(nullptr)
-	,mRenderer(nullptr)
-	,mIsRunning(true)
-	,mTicksCount(0)
-	,mPaddleDir(0)
+	, mRenderer(nullptr)
+	, mIsRunning(true)
+	, mTicksCount(0)
+	, mPaddleDir(0)
 {
 
 }
@@ -118,7 +118,7 @@ void Game::UpdateGame() {
 	mBallPos.x += mBallVel.x * deltaTime;
 	mBallPos.y += mBallVel.y * deltaTime; //update ball position based on ball velocity
 
-	
+
 	float diff = mPaddlePos.y - mBallPos.y;
 	diff = (diff > 0.0f) ? diff : -diff;
 
@@ -161,7 +161,7 @@ void Game::GenerateOuput() {
 		255,
 		255
 	);
-	
+
 	SDL_Rect wall{
 		0,
 		0,
