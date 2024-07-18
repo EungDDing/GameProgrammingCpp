@@ -1,6 +1,8 @@
 #include "Game.h"
+#include "SDL2/SDL_image.h"
 #include <algorithm>
 #include "Actor.h"
+#include "SpriteComponent.h"
 
 Game::Game()
 	:mWindow(nullptr)
@@ -28,6 +30,13 @@ bool Game::Initialize() {
 		SDL_Log("Failed to create window: %s", SDL_GetError());
 		return false;
 	}
+
+	if (IMG_Init(IMG_INIT_PNG) == 0) {
+		SDL_Log("Unable to initialize SDL_image: %s", SDL_GetError());
+		return false;
+	}
+
+	LoadData();
 
 	mTicksCount = SDL_GetTicks();
 
@@ -95,9 +104,57 @@ void Game::GenerateOutput() {
 	SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 255);
 	SDL_RenderClear(mRenderer);
 
+	for (auto sprite : mSprites) {
+		sprite->Draw(mRenderer);
+	}
 	SDL_RenderPresent(mRenderer);
 }
+
+void Game::LoadData() {
+
+}
+
+void Game::UnloadData() {
+	while (!mActors.empty()) {
+		delete mActors.back();
+	}
+
+	for (auto i : mTextures) {
+		SDL_DestroyTexture(i.second);
+	}
+	mTextures.clear();
+}
+
+SDL_Texture* Game::GetTexture(const std::string& fileName) {
+	SDL_Texture* tex = nullptr;
+	auto iter = mTextures.find(fileName);
+	if (iter != mTextures.end()) {
+		tex = iter->second;
+	}
+	else {
+		// load from file
+		SDL_Surface* surf = IMG_Load(fileName.c_str());
+		if (!surf) {
+			SDL_Log("Failed to load texture file %s", fileName.c_str());
+			return nullptr;
+		}
+
+		// create texture from surface
+		tex = SDL_CreateTextureFromSurface(mRenderer, surf);
+		SDL_FreeSurface(surf);
+		if (!tex) {
+			SDL_Log("Failed to convert surface to texture for %s", fileName.c_str());
+			return nullptr;
+		}
+
+		mTextures.emplace(fileName.c_str(), tex);
+	}
+	return tex;
+}
+
 void Game::Shutdown() {
+	UnloadData();
+	IMG_Quit();
 	SDL_DestroyRenderer(mRenderer);
 	SDL_DestroyWindow(mWindow);
 	SDL_Quit();
@@ -124,4 +181,23 @@ void Game::RemoveActor(Actor* actor) {
 		std::iter_swap(iter, mActors.end() - 1);
 		mActors.pop_back();
 	}
+}
+
+void Game::AddSprite(SpriteComponent* sprite) {
+	int myDrawOrder = sprite->GetDrawOrder();
+	auto iter = mSprites.begin();
+	for (;
+		iter != mSprites.end();
+		++iter) {
+		if (myDrawOrder < (*iter)->GetDrawOrder()) {
+			break;
+		}
+	}
+
+	mSprites.insert(iter, sprite); // insert element before position of iterator
+}
+
+void Game::RemoveSprite(SpriteComponent* sprite) {
+	auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
+	mSprites.erase(iter);
 }

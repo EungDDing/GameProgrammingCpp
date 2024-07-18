@@ -8,7 +8,7 @@ public:
 	virtual void Update(float deltaTime); // update component by delta time
 	
 	int GetUpdateOrder() const { return mUpdateOrder; }
-private:
+protected:
 	class Actor* mOwner; // owning actor
 
 	int mUpdateOrder; // update order of component
