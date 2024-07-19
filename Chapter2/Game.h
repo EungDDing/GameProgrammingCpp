@@ -38,4 +38,6 @@ private:
 	Uint32 mTicksCount;
 	bool mIsRunning;
 	bool mUpdatingActors;
+
+	class Ship* mShip;
 };

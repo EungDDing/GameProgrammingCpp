@@ -20,7 +20,7 @@ public:
 
 	// Getters/Setters
 	const Vector2& GetPosition() const { return mPosition; }
-	void SetPostion(const Vector2& pos) { mPosition = pos; }
+	void SetPosition(const Vector2& pos) { mPosition = pos; }
 	float GetScale() const { return mScale; }
 	void SetScale(float scale) { mScale = scale; }
 	float GetRotation() const { return mRotation; }
