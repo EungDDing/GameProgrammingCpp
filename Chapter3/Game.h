@@ -46,5 +46,5 @@ private:
 	
 	// game specific
 	class Ship* mShip;
-	std::vector<class Asteroid*> mAsteroids;
+	std::vector<class Asteroid*> mAsteroids; // vector of asteroid for check collision
 };

@@ -3,6 +3,7 @@
 #include "MoveComponent.h"
 #include "Game.h"
 #include "Random.h"
+#include "CircleComponent.h"
 
 Asteroid::Asteroid(Game* game)
 	:Actor(game)
@@ -19,6 +20,10 @@ Asteroid::Asteroid(Game* game)
 	// create a move component and set a forward speed
 	MoveComponent* mc = new MoveComponent(this);
 	mc->SetForwardSpeed(150.0f);
+
+	// create a circle component (for collision)
+	mCircle = new CircleComponent(this);
+	mCircle->SetRadius(40.0f);
 
 	game->AddAsteroid(this);
 }
