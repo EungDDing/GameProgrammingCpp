@@ -7,7 +7,7 @@
 
 Laser::Laser(Game* game)
 	:Actor(game)
-	, mDeathTimer(1.0f)
+	, mDeathTimer(3.0f)
 {
 	// create a sprite component
 	SpriteComponent* sc = new SpriteComponent(this);
@@ -15,7 +15,7 @@ Laser::Laser(Game* game)
 
 	// create a move component and set set a forward speed
 	MoveComponent* mc = new MoveComponent(this);
-	mc->SetForwardSpeed(800.0f);
+	mc->SetForwardSpeed(2400.0f);
 
 	// create a circle component (for collision)
 	mCircle = new CircleComponent(this);

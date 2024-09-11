@@ -32,7 +32,10 @@ public:
 	float GetRotation() const { return mRotation; }
 	void SetRotation(float rotation) { mRotation = rotation; }
 
-	Vector2 GetForward() const { return Vector2(Math::Cos(mRotation), -Math::Sin(mRotation)); }
+	void ComputeWorldTransform();
+	const Matrix4& GetWorldTransform() const { return mWorldTransform; }
+
+	Vector2 GetForward() const { return Vector2(Math::Cos(mRotation), Math::Sin(mRotation)); }
 	State GetState() const { return mState; }
 	void SetState(State state) { mState = state; }
 
@@ -46,9 +49,11 @@ private:
 	State mState;
 
 	// transform
-	Vector2 mPosition; // center of actor
-	float mScale; // scale of actor (100% = 1.0f)
-	float mRotation; // rotation angle (radian)
+	Matrix4 mWorldTransform;// store a world transform matrix
+	Vector2 mPosition;		// center of actor
+	float mScale;			// scale of actor (100% = 1.0f)
+	float mRotation;		// rotation angle (radian)
+	bool mRecomputeWorldTransform; // store if the world transform matrix needs to be recompute
 
 	std::vector<class Component*> mComponents;
 	class Game* mGame;
