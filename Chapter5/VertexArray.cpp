@@ -12,7 +12,7 @@ VertexArray::VertexArray(const float* verts, unsigned int numVerts, const unsign
 	// create vertex buffer
 	glGenBuffers(1, &mVertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, numVerts * 3 * sizeof(float), verts, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, numVerts * 5 * sizeof(float), verts, GL_STATIC_DRAW);
 
 	// create index buffer
 	glGenBuffers(1, &mIndexBuffer);
@@ -22,7 +22,9 @@ VertexArray::VertexArray(const float* verts, unsigned int numVerts, const unsign
 	// specify the vertex attribute
 	// position is 3 floats starting at offset 0
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, reinterpret_cast<void*>(sizeof(float) * 3));
 }
 
 VertexArray::~VertexArray() {

@@ -17,7 +17,7 @@ public:
 	void AddSprite(class SpriteComponent* sprite);
 	void RemoveSprite(class SpriteComponent* sprite);
 
-	SDL_Texture* GetTexture(const std::string& filename);
+	class Texture* GetTexture(const std::string& filename);
 
 	// game specific
 	void AddAsteroid(class Asteroid* ast);
@@ -28,16 +28,18 @@ private:
 	void UpdateGame();
 	void GenerateOutput();
 	bool LoadShaders();
-	void InitSpriteVerts();
+	void CreateSpriteVerts();
 	void LoadData();
 	void UnloadData();
 
-	std::unordered_map<std::string, SDL_Texture*> mTextures; // map of textures loaded
+	// map of textures loaded
+	std::unordered_map<std::string, class Texture*> mTextures; 
 
 	std::vector<class Actor*> mActors;
 	std::vector<class Actor*> mPendingActors;
 
-	std::vector<class SpriteComponent*> mSprites; //all the sprite components drawn
+	//all the sprite components drawn
+	std::vector<class SpriteComponent*> mSprites; 
 
 	// sprite shader
 	class Shader* mSpriteShader;

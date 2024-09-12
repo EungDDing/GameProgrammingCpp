@@ -21,6 +21,7 @@
     <ClInclude Include="Ship.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="Laser.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -38,5 +39,6 @@
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="Laser.cpp" />
+    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
 </Project>

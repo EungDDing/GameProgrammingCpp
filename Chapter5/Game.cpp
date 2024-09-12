@@ -1,6 +1,6 @@
 #include "Game.h"
-#include "SDL2/SDL_image.h"
 #include "GL/glew.h"
+#include "Texture.h"
 #include "VertexArray.h"
 #include "Shader.h"
 #include <algorithm>
@@ -65,7 +65,7 @@ bool Game::Initialize() {
 		return false;
 	}
 
-	InitSpriteVerts();
+	CreateSpriteVerts();
 
 	LoadData();
 
@@ -145,6 +145,10 @@ void Game::GenerateOutput() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	// draw all sprite components
+	// enable alpha blending on the color buffer
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	mSpriteShader->SetActive();
 	mSpriteVerts->SetActive();
 	for (auto sprite : mSprites) {
@@ -157,7 +161,7 @@ void Game::GenerateOutput() {
 
 bool Game::LoadShaders() {
 	mSpriteShader = new Shader();
-	if (!mSpriteShader->Load("Shaders/Transform.vert", "Shaders/Basic.frag")) {
+	if (!mSpriteShader->Load("Shaders/Sprite.vert", "Shaders/Sprite.frag")) {
 		return false;
 	}
 
@@ -169,12 +173,12 @@ bool Game::LoadShaders() {
 	return true;
 }
 
-void Game::InitSpriteVerts() {
+void Game::CreateSpriteVerts() {
 	float vertices[] = {
-		-0.5f,  0.5f, 0.f, // v0
-		 0.5f,  0.5f, 0.f, // v1
-		 0.5f, -0.5f, 0.f, // v2
-		-0.5f, -0.5f, 0.f, // v3
+		-0.5f,  0.5f, 0.f, 0.0f, 0.0f, // top left
+		 0.5f,  0.5f, 0.f, 1.0f, 0.0f, // top right
+		 0.5f, -0.5f, 0.f, 1.0f, 1.0f, // bottom right
+		-0.5f, -0.5f, 0.f, 0.0f, 1.0f, // bottom left
 	};
 
 	unsigned int indices[] = {
@@ -203,13 +207,28 @@ void Game::UnloadData() {
 	}
 
 	for (auto i : mTextures) {
-		SDL_DestroyTexture(i.second);
+		i.second->Unload();
+		delete i.second;
 	}
 	mTextures.clear();
 }
 
-SDL_Texture* Game::GetTexture(const std::string& fileName) {
-	SDL_Texture* tex = nullptr;
+Texture* Game::GetTexture(const std::string& fileName) {
+	Texture* tex = nullptr;
+	auto iter = mTextures.find(fileName);
+	if (iter != mTextures.end()) {
+		tex = iter->second;
+	}
+	else {
+		tex = new Texture();
+		if (tex->Load(fileName)) {
+			mTextures.emplace(fileName, tex);
+		}
+		else {
+			delete tex;
+			tex = nullptr;
+		}
+	}
 	return tex;
 }
 
@@ -268,7 +287,8 @@ void Game::AddSprite(SpriteComponent* sprite) {
 		}
 	}
 
-	mSprites.insert(iter, sprite); // insert element before position of iterator
+	// insert element before position of iterator
+	mSprites.insert(iter, sprite);
 }
 
 void Game::RemoveSprite(SpriteComponent* sprite) {
