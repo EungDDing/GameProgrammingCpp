@@ -112,10 +112,13 @@ void Renderer::Draw() {
 	mMeshShader->SetActive();
 	// update view-projection matrix
 	mMeshShader->SetMatrixUniform("uViewProj", mView * mProjection);
+	// update lighting uniforms
+	SetLightUniforms(mMeshShader);
 	for (auto mc : mMeshComps) {
 		mc->Draw(mMeshShader);
 	}
-
+	
+	
 	// draw all sprite components
 	// disable depth buffering
 	glDisable(GL_DEPTH_TEST);
@@ -220,7 +223,7 @@ bool Renderer::LoadShaders() {
 
 	// create basic mesh shader
 	mMeshShader = new Shader();
-	if (!mMeshShader->Load("Shaders/BasicMesh.vert", "Shaders/BasicMesh.frag")) {
+	if (!mMeshShader->Load("Shaders/Phong.vert", "Shaders/Phong.frag")) {
 		return false;
 	}
 
@@ -247,4 +250,17 @@ void Renderer::CreateSpriteVerts() {
 	};
 
 	mSpriteVerts = new VertexArray(vertices, 4, indices, 6);
+}
+
+void Renderer::SetLightUniforms(Shader* shader) {
+	// camera position is from inverted view
+	Matrix4 invView = mView;
+	invView.Invert();
+	shader->SetVectorUniform("uCameraPos", invView.GetTranslation());
+	// ambient light
+	shader->SetVectorUniform("uAmbientLight", mAmbientLight);
+	// directional light
+	shader->SetVectorUniform("uDirLight.mDirection", mDirLight.mDirection);
+	shader->SetVectorUniform("uDirLight.mDiffuseColor", mDirLight.mDiffuseColor);
+	shader->SetVectorUniform("uDirLight.mSpecColor", mDirLight.mSpecColor);
 }

@@ -21,6 +21,7 @@
     <ClInclude Include="CameraActor.h" />
     <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="CircleComponent.h" />
+    <ClInclude Include="PlaneActor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
@@ -38,5 +39,6 @@
     <ClCompile Include="CameraActor.cpp" />
     <ClCompile Include="CircleComponent.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
+    <ClCompile Include="PlaneActor.cpp" />
   </ItemGroup>
 </Project>

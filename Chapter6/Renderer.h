@@ -5,6 +5,15 @@
 #include "SDL2/SDL.h"
 #include "Math.h"
 
+struct DirectionalLight{
+	// direction of light
+	Vector3 mDirection;
+	// diffuse color
+	Vector3 mDiffuseColor;
+	// specular color
+	Vector3 mSpecColor;
+};
+
 class Renderer {
 public:
 	Renderer(class Game* game);
@@ -28,11 +37,15 @@ public:
 
 	void SetViewMatrix(const Matrix4& view) { mView = view; }
 
+	void SetAmbientLight(const Vector3& ambient) { mAmbientLight = ambient; }
+	DirectionalLight& GetDirectionalLight() { return mDirLight; }
+
 	float GetScreenWidth() const { return mScreenWidth; }
 	float GetScreenHeight() const { return mScreenHeight; }
 private:
 	bool LoadShaders();
 	void CreateSpriteVerts();
+	void SetLightUniforms(class Shader* shader);
 
 	// map of textures loaded
 	std::unordered_map<std::string, class Texture*> mTextures;
@@ -60,6 +73,10 @@ private:
 	// width/height of screen
 	float mScreenWidth;
 	float mScreenHeight;
+
+	// lighting data
+	Vector3 mAmbientLight;
+	DirectionalLight mDirLight;
 
 	// window
 	SDL_Window* mWindow;

@@ -5,6 +5,7 @@
 #include "SpriteComponent.h"
 #include "MeshComponent.h"
 #include "CameraActor.h"
+#include "PlaneActor.h"
 
 Game::Game()
 	:mRenderer(nullptr)
@@ -117,6 +118,47 @@ void Game::LoadData() {
 	a->SetScale(3.0f);
 	mc = new MeshComponent(a);
 	mc->SetMesh(mRenderer->GetMesh("Assets/Sphere.gpmesh"));
+
+	// setup floor
+	const float start = -1250.0f;
+	const float size = 250.0f;
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
+			a = new PlaneActor(this);
+			a->SetPosition(Vector3(start + i * size, start + j * size, -100.0f));
+		}
+	}
+
+	// left/right walls
+	q = Quaternion(Vector3::UnitX, Math::PiOver2);
+	for (int i = 0; i < 10; i++) {
+		a = new PlaneActor(this);
+		a->SetPosition(Vector3(start + i * size, start - size, 0.0f));
+		a->SetRotation(q);
+
+		a = new PlaneActor(this);
+		a->SetPosition(Vector3(start + i * size, -start + size, 0.0f));
+		a->SetRotation(q);
+	}
+
+	q = Quaternion::Concatenate(q, Quaternion(Vector3::UnitZ, Math::PiOver2));
+	// forward/back walls
+	for (int i = 0; i < 10; i++) {
+		a = new PlaneActor(this);
+		a->SetPosition(Vector3(start - size, start + i * size, 0.0f));
+		a->SetRotation(q);
+
+		a = new PlaneActor(this);
+		a->SetPosition(Vector3(-start + size, start + i * size, 0.0f));
+		a->SetRotation(q);
+	}
+
+	// setup light
+	mRenderer->SetAmbientLight(Vector3(0.2f, 0.2f, 0.2f));
+	DirectionalLight& dir = mRenderer->GetDirectionalLight();
+	dir.mDirection = Vector3(0.0f, -0.707f, -0.707f);
+	dir.mDiffuseColor = Vector3(0.78f, 0.88f, 1.0f);
+	dir.mSpecColor = Vector3(0.8f, 0.8f, 0.8f);
 
 	mCameraActor = new CameraActor(this);
 }
