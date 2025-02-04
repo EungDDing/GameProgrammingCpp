@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="BallActor.cpp" />
+    <ClCompile Include="AudioSystem.cpp" />
+    <ClCompile Include="AudioComponent.cpp" />
+    <ClCompile Include="BallMove.cpp" />
+    <ClCompile Include="BoxComponent.cpp" />
+    <ClCompile Include="CameraCompnent.cpp" />
+    <ClCompile Include="CircleComponent.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="DialogBox.cpp" />
+    <ClCompile Include="Font.cpp" />
+    <ClCompile Include="FPSActor.cpp" />
+    <ClCompile Include="FPSCamera.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Math.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshComponent.cpp" />
+    <ClCompile Include="MoveComponent.cpp" />
+    <ClCompile Include="PauseMenu.cpp" />
+    <ClCompile Include="PhysWorld.cpp" />
+    <ClCompile Include="PlaneActor.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SoundEvent.cpp" />
+    <ClCompile Include="SpriteComponent.cpp" />
+    <ClCompile Include="TargetActor.cpp" />
+    <ClCompile Include="TargetComponent.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="UIScreen.cpp" />
+    <ClCompile Include="VertexArray.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Actor.h" />
+    <ClInclude Include="AudioComponent.h" />
+    <ClInclude Include="BallActor.h" />
+    <ClInclude Include="AudioSystem.h" />
+    <ClInclude Include="BallMove.h" />
+    <ClInclude Include="BoxComponent.h" />
+    <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="CircleComponent.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="DialogBox.h" />
+    <ClInclude Include="Font.h" />
+    <ClInclude Include="FPSActor.h" />
+    <ClInclude Include="FPSCamera.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="HUD.h" />
+    <ClInclude Include="Math.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshComponent.h" />
+    <ClInclude Include="MoveComponent.h" />
+    <ClInclude Include="PauseMenu.h" />
+    <ClInclude Include="PhysWorld.h" />
+    <ClInclude Include="PlaneActor.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="SoundEvent.h" />
+    <ClInclude Include="SpriteComponent.h" />
+    <ClInclude Include="TargetActor.h" />
+    <ClInclude Include="TargetComponent.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="UIScreen.h" />
+    <ClInclude Include="VertexArray.h" />
+  </ItemGroup>
+</Project>
